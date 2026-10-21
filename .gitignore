@@ -1,0 +1,5 @@
+Claude outputs/
+.DS_Store
+node_modules/
+content/
+images/extra/
