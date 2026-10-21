@@ -1,4 +1,5 @@
 /* Music & Mind — single stylesheet. Hand-written, no dependencies. See BRAND.md */
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}
 :root{
   --ink:#0d1210; --ink-2:#3b4541; --ink-3:#66716c;
   --green-700:#1f6b45; --green-600:#2d7a52; --green-500:#5fa87f; --green-300:#93d3b0;
@@ -9,7 +10,7 @@
   --shadow-1:0 1px 2px rgb(13 18 16/.06),0 4px 14px -6px rgb(13 18 16/.10);
   --shadow-2:0 2px 4px rgb(13 18 16/.05),0 24px 48px -20px rgb(31 107 69/.30);
   --r:14px; --r-lg:22px;
-  --font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font:"Inter","Inter Fallback",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --step--1:clamp(.82rem,.8rem + .1vw,.9rem);
   --step-0:clamp(1rem,.96rem + .2vw,1.1rem);
   --step-1:clamp(1.2rem,1.1rem + .5vw,1.45rem);
@@ -26,7 +27,8 @@ body{margin:0;font:400 var(--step-0)/1.65 var(--font);color:var(--ink-2);backgro
 img,svg{max-width:100%;display:block}
 h1,h2,h3,h4{color:var(--ink);line-height:1.12;letter-spacing:-.025em;margin:0 0 .5em;font-weight:650;text-wrap:balance}
 h1{font-size:var(--step-4);font-weight:700;letter-spacing:-.035em}
-h2{font-size:var(--step-3)} h3{font-size:var(--step-1);letter-spacing:-.015em}
+h2{font-size:var(--step-3)} h3,h2.h3{font-size:var(--step-1);letter-spacing:-.015em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 p{margin:0 0 1em;text-wrap:pretty}
 a{color:var(--blue);text-underline-offset:3px;text-decoration-thickness:1px}
 a:hover{color:var(--brand-ink)}
@@ -38,6 +40,7 @@ a:hover{color:var(--brand-ink)}
 .section.tint{background:var(--tint);border-block:1px solid var(--line)}
 .section.dark{background:var(--ink);color:#c9d3ce}
 .section.dark h2,.section.dark h3{color:#fff}
+.section.dark .eyebrow{color:var(--green-300)}
 .eyebrow{display:inline-flex;gap:.5rem;align-items:center;font-size:var(--step--1);font-weight:600;letter-spacing:.06em;
   text-transform:uppercase;color:var(--brand-ink);margin-bottom:.9rem}
 .eyebrow::before{content:"";width:18px;height:2px;background:linear-gradient(90deg,var(--green-300),var(--green-600));border-radius:2px}
@@ -63,7 +66,7 @@ a:hover{color:var(--brand-ink)}
 .nav a:hover{background:color-mix(in srgb,var(--green-300) 30%,transparent);color:var(--ink)}
 .nav a[aria-current=page]{color:var(--brand-ink);background:color-mix(in srgb,var(--green-300) 34%,transparent)}
 .nav .btn{margin-left:.5rem;color:#fff}
-.nav .btn:hover,.nav .btn[aria-current=page]{color:#fff;background:linear-gradient(180deg,var(--green-600),var(--brand-ink))}
+.nav .btn:hover,.nav .btn[aria-current=page]{color:#fff;background:linear-gradient(180deg,var(--brand-ink),#16503a)}
 .menu-btn{display:none;appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:10px;width:42px;height:42px;cursor:pointer;color:var(--ink)}
 .menu-btn svg{width:20px;height:20px;margin:auto;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
 .subnav{border-top:1px solid var(--line)}
@@ -76,8 +79,8 @@ a:hover{color:var(--brand-ink)}
 /* ---------- Buttons ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font:600 .95rem/1 var(--font);padding:.85rem 1.25rem;border-radius:999px;
   border:1px solid transparent;text-decoration:none;cursor:pointer;color:#fff;
-  background:linear-gradient(180deg,var(--green-500),var(--green-600));
-  box-shadow:inset 0 1px 0 rgb(255 255 255/.25),0 6px 16px -6px rgb(31 107 69/.55);transition:transform .15s,box-shadow .2s,background .2s}
+  background:linear-gradient(180deg,var(--green-600),var(--green-700));
+  box-shadow:inset 0 1px 0 rgb(255 255 255/.2),0 6px 16px -6px rgb(31 107 69/.55);transition:transform .15s,box-shadow .2s,background .2s}
 .btn:hover{transform:translateY(-1px);color:#fff;box-shadow:inset 0 1px 0 rgb(255 255 255/.25),0 10px 22px -8px rgb(31 107 69/.6)}
 .btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line);box-shadow:var(--shadow-1)}
 .btn.ghost:hover{color:var(--brand-ink);border-color:color-mix(in srgb,var(--green-500) 55%,transparent)}
@@ -226,7 +229,7 @@ details.faq[open] summary::after{content:"–"}details.faq p{padding-bottom:1rem
 .site-footer{background:#080b0a;color:#9aa8a1;font-size:.92rem;padding-block:3.5rem 2rem}
 .site-footer a{color:#c4d1ca;text-decoration:none}.site-footer a:hover{color:var(--green-300)}
 .foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:2rem}
-.site-footer h4{color:#fff;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.9rem}
+.site-footer h3{color:#fff;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.9rem}
 .site-footer ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
 .site-footer .brand{color:#fff;margin-bottom:.8rem}
 .legal{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgb(255 255 255/.1);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:.82rem}

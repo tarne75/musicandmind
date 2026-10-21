@@ -66,4 +66,4 @@ Notes: the media clippings are screenshots and will look soft (the Phase 2 quali
 
 ## Git
 
-Commit as the repository owner only. Do **not** add `Co-Authored-By` trailers or any Claude/AI attribution lines to commit messages or PR descriptions.
+Commit after every completed change (don't wait to be asked). Commit as the repository owner only. Do **not** add `Co-Authored-By` trailers or any Claude/AI attribution lines to commit messages or PR descriptions.

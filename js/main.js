@@ -78,7 +78,7 @@
   function serviceCard(s, i, compact) {
     const pts = compact ? '' : `<ul>${splitPoints(s.points || '').map(p => `<li>${esc(p)}</li>`).join('')}</ul>`;
     const cta = compact
-      ? `<a class="link-arrow" href="services.html#${esc(s.slug)}">Learn more</a>`
+      ? `<a class="link-arrow" href="services.html#${esc(s.slug)}">Explore ${esc(s.title.toLowerCase())}</a>`
       : `<a class="btn ghost sm" href="${esc(s.cta_href || 'contact.html')}">${esc(s.cta_label || 'Enquire')}</a>`;
     return `<article class="card svc-card reveal"${compact ? '' : ` id="${esc(s.slug)}"`} style="--i:${i % 2}">
       <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24">${ICONS[s.icon] || ICONS.sparkle}</svg></div>
@@ -99,8 +99,8 @@
       h.innerHTML = rows.slice(0, limit).map((s, i) => serviceCard(s, i, compact)).join('');
       h.removeAttribute('aria-busy');
       observeReveals(h);
-      if (location.hash) { const t = document.getElementById(location.hash.slice(1)); t && t.scrollIntoView(); }
     });
+    if (location.hash) requestAnimationFrame(() => { const t = document.getElementById(decodeURIComponent(location.hash.slice(1))); t && t.scrollIntoView(); });
     document.dispatchEvent(new CustomEvent('services:ready'));
   }
 
@@ -108,8 +108,12 @@
   function initHeader() {
     const header = $('.site-header'), btn = $('.menu-btn'), nav = $('#nav');
     if (header) {
-      const set = () => document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
-      set(); new ResizeObserver(set).observe(header);
+      let spy = false;
+      new ResizeObserver(([e]) => {
+        const h = Math.round(e.borderBoxSize ? e.borderBoxSize[0].blockSize : e.contentRect.height);
+        document.documentElement.style.setProperty('--header-h', h + 'px');
+        if (!spy) { spy = true; initScrollspy(h); }
+      }).observe(header);
     }
     if (!btn || !nav) return;
     const toggle = open => { nav.dataset.open = open; btn.setAttribute('aria-expanded', open); };
@@ -130,7 +134,7 @@
   }
 
   /* ---------- Scrollspy for the in-page sub navigation ---------- */
-  function initScrollspy() {
+  function initScrollspy(headerH = 100) {
     const links = $$('.subnav a[href^="#"]');
     if (!links.length || !('IntersectionObserver' in window)) return;
     const map = new Map(links.map(a => [a.hash.slice(1), a]));
@@ -139,12 +143,12 @@
     const mark = id => links.forEach(a => {
       const on = a.hash.slice(1) === id; a.classList.toggle('active', on);
       on ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current');
-      if (on) { const bar = a.parentElement; bar.scrollTo({ left: a.offsetLeft - bar.clientWidth / 3, behavior: 'smooth' }); }
+      if (on) requestAnimationFrame(() => a.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' }));
     });
     const io = new IntersectionObserver(es => {
       es.forEach(e => e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id));
       const first = targets.find(t => visible.has(t.id)); if (first) mark(first.id);
-    }, { rootMargin: `-${(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 100) + 8}px 0px -55% 0px` });
+    }, { rootMargin: `-${headerH + 8}px 0px -55% 0px` });
     targets.forEach(t => io.observe(t));
   }
 
@@ -200,7 +204,7 @@
   }
 
   function init() {
-    initHeader(); initServices(); observeReveals(); initScrollspy(); initLightbox(); initFilter(); initForm();
+    initHeader(); initServices(); observeReveals(); initLightbox(); initFilter(); initForm();
     $$('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
   }
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
