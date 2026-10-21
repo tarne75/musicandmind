@@ -222,7 +222,7 @@ form.form{background:var(--surface);border:1px solid var(--line);border-radius:v
 details.faq{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:0 1.2rem;margin-bottom:.7rem}
 details.faq summary{cursor:pointer;font-weight:600;color:var(--ink);padding:1rem 0;list-style:none;display:flex;justify-content:space-between;gap:1rem}
 details.faq summary::after{content:"+";color:var(--brand);font-size:1.3rem;line-height:1}
-details.faq[open] summary::after{content:"–"}details.faq p{padding-bottom:1rem;margin:0}
+details.faq[open] summary::after{content:"-"}details.faq p{padding-bottom:1rem;margin:0}
 
 /* CTA band + footer */
 .cta{text-align:center;padding-block:clamp(3rem,7vw,5rem);background:radial-gradient(600px 260px at 50% 0,color-mix(in srgb,var(--green-500) 35%,transparent),transparent 70%),var(--ink);color:#c9d3ce}

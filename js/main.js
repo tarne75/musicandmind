@@ -1,11 +1,11 @@
-/* Music & Mind — main.js. Vanilla, zero dependencies. */
+/* Music & Mind - main.js. Vanilla, zero dependencies. */
 (() => {
   'use strict';
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
   /* ------------------------------------------------------------------
-   * CONFIG — Phase 2: paste the published Google Sheet CSV URL below
+   * CONFIG - Phase 2: paste the published Google Sheet CSV URL below
    * (File > Share > Publish to web > CSV). Leave '' to use the embedded
    * SERVICES_CSV. Sheet columns must match the header row of SERVICES_CSV.
    * ---------------------------------------------------------------- */
