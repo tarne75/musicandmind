@@ -143,7 +143,7 @@
     const mark = id => links.forEach(a => {
       const on = a.hash.slice(1) === id; a.classList.toggle('active', on);
       on ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current');
-      if (on) requestAnimationFrame(() => a.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' }));
+      if (on) requestAnimationFrame(() => { const bar = a.parentElement; if (bar.scrollWidth > bar.clientWidth) bar.scrollTo({ left: a.offsetLeft - (bar.clientWidth - a.offsetWidth) / 2, behavior: 'smooth' }); });
     });
     const io = new IntersectionObserver(es => {
       es.forEach(e => e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id));
