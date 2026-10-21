@@ -1,4 +1,6 @@
-/* Music & Mind — single stylesheet. Hand-written, no dependencies. See BRAND.md */
+/* Music & Mind: single stylesheet. Hand-written, no dependencies. See BRAND.md */
+/* Self-hosted Inter (latin subset, variable 400-700, ~17 KB, preloaded in each page head): avoids render-blocking third-party font requests */
+@font-face{font-family:"Inter";font-style:normal;font-weight:400 700;font-display:swap;src:url("../fonts/inter-latin.woff2") format("woff2")}
 @font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}
 :root{
   --ink:#0d1210; --ink-2:#3b4541; --ink-3:#66716c;
