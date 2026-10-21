@@ -31,7 +31,7 @@ All tints/borders are derived with `color-mix()`, so changing a token re-themes 
 
 ## Typography
 
-- **Inter** (Google Fonts, variable 400–700, `display=swap`) for everything.
+- **Inter**, self-hosted (`fonts/inter-latin.woff2`, latin subset, variable 400–700, `display=swap`, preloaded) for everything.
 - Fluid scale with `clamp()`: `--step--1` … `--step-4` (hero h1 up to 4.4rem).
 - Headings: weight 650–700, letter-spacing `-0.025em` to `-0.035em`, `text-wrap: balance`. Body 400, line-height 1.65.
 - Eyebrows: 0.8–0.9rem, uppercase, 600, +0.06em tracking, green-700, with a short green gradient rule.

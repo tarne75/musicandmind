@@ -8,7 +8,7 @@
  *
  * The old Wix site lazy-loads its images, so this script:
  *   1. downloads every known image into the exact filenames the HTML expects
- *      (images/media/mNN.ext, images/blog/bNN.png);
+ *      (images/originals/media/mNN.ext, images/originals/blog/bNN.png);
  *   2. scans every old page for any other static.wixstatic.com/media/... URLs and saves
  *      them to images/extra/ so nothing is lost (check this folder for photos/logos);
  *   3. (--blog) extracts each blog post's text for Phase 2 migration.
@@ -38,7 +38,7 @@ const media = [
   'bf1d7b_aa5ad788f8bd4dff9fb68673f3c24147~mv2.png', 'bf1d7b_af382e262c9a43f7bb33378d5d66f7a9~mv2.png',
   'bf1d7b_57cc40b1daef47ddb24450283a544bee~mv2.jpg', 'bf1d7b_45b6f766bd5745dfaf343149710ddc3b~mv2.png',
   'bf1d7b_3959770a6c9a417a87b055977f0e510b~mv2.png', 'bf1d7b_5444a499b35e489f895729e51e6d5012~mv2.png',
-].map((id, i) => [`images/media/m${String(i + 1).padStart(2, '0')}.${id.split('.').pop()}`, id]);
+].map((id, i) => [`images/originals/media/m${String(i + 1).padStart(2, '0')}.${id.split('.').pop()}`, id]);
 
 const blog = [
   ['music-performance-anxiety-mpa', 'bf1d7b_65b06b2974fd4aa59c5d339293bd8725~mv2.png'],
@@ -52,14 +52,14 @@ const blog = [
   ['are-musicians-weird', 'bf1d7b_3bc8fc0918d64d9999722b7abf4c0385~mv2.png'],
   ['my-research-and-me', 'bf1d7b_840ddf967e574a9b9d9df34f43e13f56~mv2.png'],
 ];
-const blogImgs = blog.map(([, id], i) => [`images/blog/b${String(i + 1).padStart(2, '0')}.png`, id]);
+const blogImgs = blog.map(([, id], i) => [`images/originals/blog/b${String(i + 1).padStart(2, '0')}.png`, id]);
 
 const brand = [ // original logo + social icons, kept for reference only (site uses new SVG logo + inline icons)
-  ['images/original/logo-original.png', 'bf1d7b_109332c6003f4a48915a7d1a560f7cad~mv2_d_4000_1837_s_2.png'],
-  ['images/original/icon-youtube.png', 'a1b09fe8b7f04378a9fe076748ad4a6a.png'],
-  ['images/original/icon-twitter.png', '9c4b521dd2404cd5a05ed6115f3a0dc8.png'],
-  ['images/original/icon-facebook.png', 'e316f544f9094143b9eac01f1f19e697.png'],
-  ['images/original/icon-instagram.png', '8d6893330740455c96d218258a458aa4.png'],
+  ['images/originals/brand/logo-original.png', 'bf1d7b_109332c6003f4a48915a7d1a560f7cad~mv2_d_4000_1837_s_2.png'],
+  ['images/originals/brand/icon-youtube.png', 'a1b09fe8b7f04378a9fe076748ad4a6a.png'],
+  ['images/originals/brand/icon-twitter.png', '9c4b521dd2404cd5a05ed6115f3a0dc8.png'],
+  ['images/originals/brand/icon-facebook.png', 'e316f544f9094143b9eac01f1f19e697.png'],
+  ['images/originals/brand/icon-instagram.png', '8d6893330740455c96d218258a458aa4.png'],
 ];
 
 const exists = p => access(join(ROOT, p)).then(() => true, () => false);

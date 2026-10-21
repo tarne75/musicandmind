@@ -4,7 +4,7 @@ Static, dependency-free rebuild of the old Wix site, for hosting on GitHub Pages
 
 ## Stack and constraints
 
-- Static HTML, **one** stylesheet (`css/style.css`, about 22 KB / 6 KB gzipped), **one** script (`js/main.js`, about 16 KB / 6 KB gzipped), Inter from Google Fonts. No frameworks, no build step, no npm packages.
+- Static HTML, **one** stylesheet (`css/style.css`, about 22 KB / 6 KB gzipped), **one** script (`js/main.js`, about 16 KB / 6 KB gzipped), and **self-hosted, preloaded Inter** (`fonts/inter-latin.woff2`: latin subset, variable 400-700, 17 KB; same approach as t4-digital.uk). No Google Fonts requests, no frameworks, no build step, no npm packages.
 - Platform features used: `<dialog>` lightbox (native focus trap and Esc), IntersectionObserver (reveals and scrollspy), CSS custom properties, `clamp()` fluid type, `color-mix()`, `svh` units, `:user-invalid`, `backdrop-filter`.
 - Paths are relative, so the site works from a domain root or a project sub-path. `.nojekyll` is included.
 
@@ -38,18 +38,17 @@ Posts to `https://formspree.io/f/xwvndkow`. It works without JS (normal POST), a
 
 1. **Replace the placeholder email and phone.** The original site publishes neither, so I used `hello@musicandmind.co.uk` and `+44 0000 000000` in the header, footer and contact page. From the project root:
    `grep -rl "hello@musicandmind.co.uk" --include=*.html . | xargs sed -i '' 's/hello@musicandmind.co.uk/REAL_EMAIL/g'` (drop the `''` on Linux), and the same for `+44 0000 000000` and `+440000000000`.
-2. Images are already downloaded; re-run `scripts/download-images.sh` if any are missing.
+2. (Done) Images are downloaded and converted to WebP.
 3. Add a `CNAME` file if using a custom domain; check the `canonical` and `sitemap.xml` URLs (they assume `https://www.musicandmind.co.uk`).
 4. Blog posts still link to the old Wix post URLs, which will break once the domain moves. Run `node scripts/download-assets.mjs --blog` and migrate the text (Phase 2).
 
-## Images: `scripts/download-images.sh`
+## Images
 
-The old site lazy-loads images, so they are fetched by script. From the project root run `bash scripts/download-images.sh` (needs only `curl`; skips files that already exist, so it is safe to re-run).
+The site serves optimised **WebP** copies (`images/media/m01…m26.webp`, `images/blog/b01…b10.webp`: max 1200px / 960px wide, quality 82, 28 MB down to 1.7 MB). Real width/height attributes are set on every `<img>` to prevent layout shift, and everything below the fold is `loading="lazy"`.
 
-- Saves 26 media clippings to `images/media/m01…m26` and 10 blog thumbnails to `images/blog/b01…b10.png`. These are the exact names the HTML references.
-- Also saves the old logo and social icons to `images/original/` (reference only).
-- Downloads are full-resolution originals (about 27 MB in total; they are lazy-loaded). Resize for Phase 2, e.g. `sips -Z 1400 images/media/*.png` on macOS.
-- `scripts/download-assets.mjs` is an optional Node alternative that can also scan for extra images (`images/extra/`) and export blog post text (`--blog`). It failed on the first run, so use the bash script for images.
+The full-resolution originals from the old Wix site are kept as local backups in `images/originals/` (git-ignored, not published). To (re)download them run `bash scripts/download-images.sh` (needs only `curl`; skips existing files). To regenerate a WebP from an original, resize and convert it with any tool, e.g. `cwebp -q 82 -resize 1200 0 in.png -o images/media/m04.webp` (`brew install webp`).
+
+`scripts/download-assets.mjs` is an optional Node alternative that can also scan for extra images and export blog post text (`--blog`).
 
 Notes: the media clippings are screenshots and will look soft (the Phase 2 quality pass). They have generic alt text ("Media clipping N") that should be improved. I could not reliably map each clipping to an article, so the clippings gallery and the press link list are separate. Width/height attributes come from the original display sizes to avoid layout shift.
 

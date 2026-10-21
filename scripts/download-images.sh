@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Downloads all Music & Mind images from the old Wix site into images/.
+# Downloads the full-resolution ORIGINAL images from the old Wix site into images/originals/ (git-ignored backups).
+# The site itself uses the optimised .webp copies in images/media and images/blog.
 # Usage (from project root):  bash scripts/download-images.sh
 # Safe to re-run: existing files are skipped. Requires only curl.
 cd "$(dirname "$0")/.." || exit 1
@@ -34,7 +35,7 @@ for id in \
   bf1d7b_57cc40b1daef47ddb24450283a544bee~mv2.jpg bf1d7b_45b6f766bd5745dfaf343149710ddc3b~mv2.png \
   bf1d7b_3959770a6c9a417a87b055977f0e510b~mv2.png bf1d7b_5444a499b35e489f895729e51e6d5012~mv2.png
 do
-  i=$((i+1)); get "$(printf 'images/media/m%02d.%s' "$i" "${id##*.}")" "$id"
+  i=$((i+1)); get "$(printf 'images/originals/media/m%02d.%s' "$i" "${id##*.}")" "$id"
 done
 
 # Blog thumbnails -> images/blog/b01...b10.png
@@ -46,14 +47,14 @@ for id in \
   bf1d7b_233636a5c9f5445bb11ae6db8ea76191~mv2.png bf1d7b_bd3b038788e34e68b15241a422d0f397~mv2.png \
   bf1d7b_3bc8fc0918d64d9999722b7abf4c0385~mv2.png bf1d7b_840ddf967e574a9b9d9df34f43e13f56~mv2.png
 do
-  i=$((i+1)); get "$(printf 'images/blog/b%02d.png' "$i")" "$id"
+  i=$((i+1)); get "$(printf 'images/originals/blog/b%02d.png' "$i")" "$id"
 done
 
 # Original logo + social icons (reference only)
-get images/original/logo-original.png "bf1d7b_109332c6003f4a48915a7d1a560f7cad~mv2_d_4000_1837_s_2.png"
-get images/original/icon-youtube.png   a1b09fe8b7f04378a9fe076748ad4a6a.png
-get images/original/icon-twitter.png   9c4b521dd2404cd5a05ed6115f3a0dc8.png
-get images/original/icon-facebook.png  e316f544f9094143b9eac01f1f19e697.png
-get images/original/icon-instagram.png 8d6893330740455c96d218258a458aa4.png
+get images/originals/brand/logo-original.png "bf1d7b_109332c6003f4a48915a7d1a560f7cad~mv2_d_4000_1837_s_2.png"
+get images/originals/brand/icon-youtube.png   a1b09fe8b7f04378a9fe076748ad4a6a.png
+get images/originals/brand/icon-twitter.png   9c4b521dd2404cd5a05ed6115f3a0dc8.png
+get images/originals/brand/icon-facebook.png  e316f544f9094143b9eac01f1f19e697.png
+get images/originals/brand/icon-instagram.png 8d6893330740455c96d218258a458aa4.png
 
 echo; [ "$fail" -eq 0 ] && echo "All images downloaded." || echo "$fail download(s) failed; re-run to retry."
